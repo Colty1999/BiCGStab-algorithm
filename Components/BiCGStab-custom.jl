@@ -16,16 +16,15 @@ function custom_BICGStab(A, b, M, x, tol)
         sigma = transpose(v) * r_d
         a = ro / sigma
         s = r - a * v
-        s_d = zero(s)
-        ldiv!(s_d, M, s)
+        s_d = M \ s
         t = A * s_d
         w = (transpose(s) * t) / (transpose(t) * t)
         x = x + a * p_d + w * s_d
         r = s - w * t
         if norm(b - A * x) <= tol
-            # print(x)
             return x
         end
+
     end
     return x
 end
